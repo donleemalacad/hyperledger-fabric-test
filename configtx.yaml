@@ -1,0 +1,43 @@
+Profiles:
+    OneOrgGenesis:
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+        Consortiums:
+            ThanksConsortium:
+                Organizations:
+                    - *ThanksOrg
+    OneOrgChannel:
+        Consortium: ThanksConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *ThanksOrg
+
+Organizations:
+    - &OrdererOrg
+        Name: OrdererOrg
+        ID: OrdererMSP
+        MSPDir: artifacts/crypto/ordererOrganizations/excite-org/msp
+    - &ThanksOrg
+        Name: ThanksOrgMSP
+        ID: ThanksOrgMSP
+        MSPDir: artifacts/crypto/peerOrganizations/thanks-org/msp
+        AnchorPeers:
+            - Host: thanks-peer
+              Port: 7051
+
+Orderer: &OrdererDefaults
+    OrdererType: solo
+    Addresses:
+        - orderer0:7050
+    BatchTimeout: 2s
+    BatchSize:
+        MaxMessageCount: 10
+        AbsoluteMaxBytes: 99 MB
+        PreferredMaxBytes: 512 KB
+    Organizations:
+
+Application: &ApplicationDefaults
+    Organizations:
