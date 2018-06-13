@@ -7,6 +7,7 @@ OrdererOrgs:
     CommonName: excite-org
     Specs:
       - Hostname: orderer0
+        CommonName: "{{.Hostname}}"
 # ---------------------------------------------------------------------------
 # "PeerOrgs" - Definition of organizations managing peer nodes
 # ---------------------------------------------------------------------------
