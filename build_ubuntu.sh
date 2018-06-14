@@ -8,7 +8,7 @@
 
 # Run Fabric Network Setup
 sh ./fabric.sh
-sh ./docker.sh
+#sh ./docker.sh
 
 # Set Interval
 #sleep 5
