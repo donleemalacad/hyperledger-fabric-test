@@ -1,0 +1,63 @@
+version: '2'
+
+services:
+  thanks-ca:
+    container_name: thanks-ca
+    extends:
+      file: ./ca-base.yaml
+      service: ca-base
+    image: thanks-ca
+    ports:
+    - 7054:7054
+
+  orderer0:
+    container_name: orderer0
+    image: orderer
+    environment:
+    - ORDERER_GENERAL_LOGLEVEL=debug
+    - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+    - ORDERER_GENERAL_GENESISMETHOD=file
+    - ORDERER_GENERAL_GENESISFILE=/orderer/certs/genesis.block
+    - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+    - ORDERER_GENERAL_LOCALMSPDIR=/orderer/certs/msp
+    - ORDERER_GENERAL_TLS_ENABLED=true
+    - ORDERER_GENERAL_TLS_PRIVATEKEY=/orderer/certs/tls/server.key
+    - ORDERER_GENERAL_TLS_CERTIFICATE=/orderer/certs/tls/server.crt
+    - ORDERER_GENERAL_TLS_ROOTCAS=[/orderer/certs/tls/ca.crt]
+    working_dir: /orderer
+    command: orderer
+    ports:
+    - 7050:7050
+
+  thanks-peer:
+    container_name: thanks-peer
+    extends:
+      file: ./peer-base.yaml
+      service: peer-base
+    image: thanks-peer
+    environment:
+    - CORE_PEER_ID=thanks-peer
+    - CORE_PEER_ADDRESS=thanks-peer:7051
+    - CORE_PEER_GOSSIP_EXTERNALENDPOINT=thanks-peer:7051
+    - CORE_PEER_LOCALMSPID=ThanksOrgMSP
+    ports:
+    - 7051:7051
+    - 7053:7053
+    depends_on:
+    - orderer0
+
+  web:
+    container_name: web
+    image: web
+    environment:
+    - PORT=3000
+    - DOCKER_SOCKET_PATH=/host/var/run/docker.sock
+    - DOCKER_CCENV_IMAGE=hyperledger/fabric-ccenv:x86_64-1.1.0
+    ports:
+    - 3000:3000
+    volumes:
+    - /var/run/:/host/var/run/
+    depends_on:
+    - orderer0
+    - thanks-ca
+    - thanks-peer
