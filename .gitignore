@@ -13,4 +13,5 @@ web/certs/
 
 # Files
 web/channel.tx
+get-docker-images.sh
 .placefolder
