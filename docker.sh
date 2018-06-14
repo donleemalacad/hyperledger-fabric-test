@@ -56,7 +56,7 @@ if [ $BUILD ];
     echo '############################################################'
     echo '#                 BUILDING CONTAINER IMAGES                #'
     echo '############################################################'
-    #docker build -t orderer:latest crypto/orderer/
-    #docker build -t insurance-peer:latest crypto/thanksPeer/
-    #docker build -t insurance-ca:latest crypto/thanksPeer/ca-certs/
+    docker build -t orderer:latest crypto/orderer/
+    docker build -t thanks-peer:latest crypto/thanksPeer/
+    docker build -t thanks-ca:latest crypto/thanksPeer/ca-certs/
 fi
