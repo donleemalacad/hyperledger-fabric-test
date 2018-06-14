@@ -58,5 +58,5 @@ if [ $BUILD ];
     echo '############################################################'
     #docker build -t orderer:latest crypto/orderer/
     #docker build -t insurance-peer:latest crypto/thanksPeer/
-    #docker build -t insurance-ca:latest insuranceCA/
+    #docker build -t insurance-ca:latest crypto/thanksPeer/ca-certs/
 fi
