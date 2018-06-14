@@ -1,0 +1,22 @@
+OrdererOrgs:
+  # ---------------------------------------------------------------------------
+  # Orderer
+  # ---------------------------------------------------------------------------
+  - Name: OrdererOrg
+    Domain: excite-org
+    CommonName: excite-org
+    Specs:
+      - Hostname: orderer0
+        CommonName: "{{.Hostname}}"
+# ---------------------------------------------------------------------------
+# "PeerOrgs" - Definition of organizations managing peer nodes
+# ---------------------------------------------------------------------------
+PeerOrgs:
+  # ---------------------------------------------------------------------------
+  # ThanksOrg
+  # ---------------------------------------------------------------------------
+  - Name: ThanksOrg
+    Domain: thanks-org
+    Specs:
+    - Hostname: thanks-peer
+      CommonName: "{{.Hostname}}"
