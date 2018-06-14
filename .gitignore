@@ -5,5 +5,5 @@ fabric-ca-client
 orderer
 peer
 artifacts/
-certificates/
+crypto/
 .placefolder
